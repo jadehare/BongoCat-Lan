@@ -214,7 +214,8 @@
   "utils": {
     "live2d": {
       "hints": {
-        "notFound": "Không tìm thấy tệp cấu hình chính của mô hình, vui lòng xác nhận các tệp mô hình có đầy đủ không."
+        "notFound": "Không tìm thấy tệp cấu hình chính của mô hình, vui lòng xác nhận các tệp mô hình có đầy đủ không.",
+        "canvasNotFound": "Không tìm thấy canvas render mô hình, vui lòng xác nhận giao diện đã được mount đúng."
       }
     }
   }

@@ -214,7 +214,8 @@
   "utils": {
     "live2d": {
       "hints": {
-        "notFound": "Model master configuration file not found, please ensure the model files are complete."
+        "notFound": "Model master configuration file not found, please ensure the model files are complete.",
+        "canvasNotFound": "Model canvas not found, please ensure the view is mounted correctly."
       }
     }
   }

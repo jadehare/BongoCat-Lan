@@ -7,30 +7,51 @@ import { groupBy } from 'es-toolkit/compat'
 import JSON5 from 'json5'
 import { Application, Ticker } from 'pixi.js'
 
-import type { ModelSize } from '@/composables/useModel'
-
 import { i18n } from '@/locales'
 
 import { join } from './path'
 
 Config.MouseFollow = false
 
-class Live2d {
+export interface ModelSize {
+  width: number
+  height: number
+}
+
+type ResizeTarget = Window | HTMLElement
+
+export class Live2d {
   private app: Application | null = null
   public model: Live2DSprite | null = null
+  private view: HTMLCanvasElement | null = null
+  private resizeTarget: ResizeTarget = window
 
-  constructor() { }
+  constructor(view?: HTMLCanvasElement, resizeTarget: ResizeTarget = window) {
+    this.view = view ?? null
+    this.resizeTarget = resizeTarget
+  }
+
+  public attach(view: HTMLCanvasElement, resizeTarget: ResizeTarget = window) {
+    this.view = view
+    this.resizeTarget = resizeTarget
+  }
 
   private initApp() {
     if (this.app) return
 
-    const view = document.getElementById('live2dCanvas') as HTMLCanvasElement
+    const view = this.view ?? document.getElementById('live2dCanvas') as HTMLCanvasElement | null
+
+    if (!view) {
+      throw new Error(i18n.global.t('utils.live2d.hints.canvasNotFound'))
+    }
+
+    this.view = view
 
     this.app = new Application()
 
     return this.app.init({
       view,
-      resizeTo: window,
+      resizeTo: this.resizeTarget,
       backgroundAlpha: 0,
       autoDensity: true,
       resolution: devicePixelRatio,
@@ -40,7 +61,7 @@ class Live2d {
   public async load(path: string) {
     await this.initApp()
 
-    this.destroy()
+    this.destroyModel()
 
     const files = await readDir(path)
 
@@ -85,6 +106,13 @@ class Live2d {
   }
 
   public destroy() {
+    this.destroyModel()
+
+    this.app?.destroy(true)
+    this.app = null
+  }
+
+  private destroyModel() {
     if (!this.model) return
 
     this.model?.destroy()
@@ -92,18 +120,19 @@ class Live2d {
     this.model = null
   }
 
-  public resizeModel(modelSize: ModelSize) {
+  public resizeModel(modelSize: ModelSize, viewport?: ModelSize) {
     if (!this.model) return
 
     const { width, height } = modelSize
+    const nextViewport = viewport ?? this.getViewportSize()
 
-    const scaleX = innerWidth / width
-    const scaleY = innerHeight / height
+    const scaleX = nextViewport.width / width
+    const scaleY = nextViewport.height / height
     const scale = Math.min(scaleX, scaleY)
 
     this.model.scale.set(scale)
-    this.model.x = innerWidth / 2
-    this.model.y = innerHeight / 2
+    this.model.x = nextViewport.width / 2
+    this.model.y = nextViewport.height / 2
     this.model.anchor.set(0.5)
   }
 
@@ -132,6 +161,20 @@ class Live2d {
 
   public setMaxFPS(fps: number) {
     Ticker.shared.maxFPS = fps
+  }
+
+  private getViewportSize(): ModelSize {
+    if (this.resizeTarget instanceof Window) {
+      return {
+        width: this.resizeTarget.innerWidth,
+        height: this.resizeTarget.innerHeight,
+      }
+    }
+
+    return {
+      width: this.resizeTarget.clientWidth,
+      height: this.resizeTarget.clientHeight,
+    }
   }
 }
 

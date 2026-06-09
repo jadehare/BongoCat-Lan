@@ -1,15 +1,15 @@
 import type { PhysicalPosition } from '@tauri-apps/api/dpi'
 
 import { LogicalSize } from '@tauri-apps/api/dpi'
-import { resolveResource, sep } from '@tauri-apps/api/path'
+import { resolveResource } from '@tauri-apps/api/path'
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow'
 import { message } from 'antdv-next'
 import { isNil, round } from 'es-toolkit'
-import { findKey, nth } from 'es-toolkit/compat'
 import { ref } from 'vue'
 
 import { useCatStore } from '@/stores/cat'
 import { useModelStore } from '@/stores/model'
+import { pressModelKey, releaseModelKey } from '@/utils/modelInput'
 import { getCursorMonitor } from '@/utils/monitor'
 import { isMac } from '@/utils/platform'
 
@@ -18,11 +18,7 @@ import live2d from '../utils/live2d'
 const appWindow = getCurrentWebviewWindow()
 const digitKeys = '1234567890'.split('') as readonly string[]
 const letterKeys = 'QWERTYUIOPASDFGHJKLZXCVBNM'.split('') as readonly string[]
-
-export interface ModelSize {
-  width: number
-  height: number
-}
+type ModelSize = Parameters<typeof live2d.resizeModel>[0]
 
 export function useModel() {
   const modelStore = useModelStore()
@@ -137,24 +133,11 @@ export function useModel() {
   }
 
   const handlePress = (key: string) => {
-    const path = modelStore.supportKeys[key]
-
-    if (!path) return
-
-    const dirName = nth(path.split(sep()), -2)!
-    const prevKey = findKey(modelStore.pressedKeys, (value) => {
-      return value.includes(dirName)
-    })
-
-    if (prevKey) {
-      handleRelease(prevKey)
-    }
-
-    modelStore.pressedKeys[key] = path
+    pressModelKey(modelStore.pressedKeys, modelStore.supportKeys, key)
   }
 
   const handleRelease = (key: string) => {
-    delete modelStore.pressedKeys[key]
+    releaseModelKey(modelStore.pressedKeys, key)
   }
 
   function handleKeyChange(isLeft = true, pressed = true) {

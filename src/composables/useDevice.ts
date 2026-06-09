@@ -9,6 +9,7 @@ import { useAppStore } from '@/stores/app'
 import { useCatStore } from '@/stores/cat'
 import { useModelStore } from '@/stores/model'
 import { inBetween } from '@/utils/is'
+import { getSupportedModelKey } from '@/utils/modelInput'
 import { isMac, isWindows } from '@/utils/platform'
 
 import { INVOKE_KEY, LISTEN_KEY, WINDOW_LABEL } from '../constants'
@@ -101,25 +102,6 @@ export function useDevice() {
     invoke(INVOKE_KEY.START_DEVICE_LISTENING)
   }
 
-  const getSupportedKey = (key: string) => {
-    let nextKey = key
-
-    const unsupportedKey = !modelStore.supportKeys[nextKey]
-
-    if (key.startsWith('F') && unsupportedKey) {
-      nextKey = key.replace(/F(\d+)/, 'Fn')
-    }
-
-    for (const item of ['Meta', 'Shift', 'Alt', 'Control']) {
-      if (key.startsWith(item) && unsupportedKey) {
-        const regex = new RegExp(`^(${item}).*`)
-        nextKey = key.replace(regex, '$1')
-      }
-    }
-
-    return nextKey
-  }
-
   const onHideOnHover = (() => {
     let timer: ReturnType<typeof setTimeout> | undefined
     let wasInWindow = false
@@ -187,7 +169,7 @@ export function useDevice() {
     const { kind, value } = payload
 
     if (kind === 'KeyboardPress' || kind === 'KeyboardRelease') {
-      const nextValue = getSupportedKey(value)
+      const nextValue = getSupportedModelKey(value, modelStore.supportKeys)
 
       if (!nextValue) return
 

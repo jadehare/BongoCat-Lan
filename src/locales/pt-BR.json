@@ -214,7 +214,8 @@
   "utils": {
     "live2d": {
       "hints": {
-        "notFound": "Arquivo de configuração principal do modelo não encontrado. Verifique se os arquivos do modelo estão completos."
+        "notFound": "Arquivo de configuração principal do modelo não encontrado. Verifique se os arquivos do modelo estão completos.",
+        "canvasNotFound": "Canvas do modelo não encontrado. Verifique se a visualização foi montada corretamente."
       }
     }
   }
