@@ -1,3 +1,4 @@
+use super::lan;
 use rdev::{Event, EventType, listen};
 use serde::Serialize;
 use serde_json::{Value, json};
@@ -55,6 +56,7 @@ pub async fn start_device_listening<R: Runtime>(app_handle: AppHandle<R>) -> Res
         };
 
         let _ = app_handle.emit("device-changed", device_event);
+        lan::forward_local_device_event(&app_handle, &event.event_type);
     };
 
     listen(callback).map_err(|err| format!("Failed to listen device: {:?}", err))?;

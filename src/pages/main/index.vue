@@ -10,17 +10,19 @@ import { exists, readDir } from '@tauri-apps/plugin-fs'
 import { useDebounceFn, useEventListener } from '@vueuse/core'
 import { round } from 'es-toolkit'
 import { nth } from 'es-toolkit/compat'
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
 import { useAppMenu } from '@/composables/useAppMenu'
 import { useDevice } from '@/composables/useDevice'
 import { useGamepad } from '@/composables/useGamepad'
+import { useLanSync } from '@/composables/useLanSync'
 import { useModel } from '@/composables/useModel'
 import { useTauriListen } from '@/composables/useTauriListen'
 import { LISTEN_KEY } from '@/constants'
 import { hideWindow, setAlwaysOnTop, setTaskbarVisibility, showWindow } from '@/plugins/window'
 import { useCatStore } from '@/stores/cat'
 import { useGeneralStore } from '@/stores/general.ts'
+import { useLanStore } from '@/stores/lan'
 import { useModelStore } from '@/stores/model'
 import { isImage } from '@/utils/is'
 import live2d from '@/utils/live2d'
@@ -35,9 +37,13 @@ const catStore = useCatStore()
 const { getBaseMenu, getExitMenu } = useAppMenu()
 const modelStore = useModelStore()
 const generalStore = useGeneralStore()
+const lanStore = useLanStore()
 const resizing = ref(false)
 const backgroundImagePath = ref<string>()
 const { stickActive } = useGamepad()
+const remoteClients = computed(() => lanStore.remoteClientsList)
+
+useLanSync()
 
 onMounted(startListening)
 
@@ -175,6 +181,13 @@ function handleMouseMove(event: MouseEvent) {
 
   catStore.window.scale = round(nextScale)
 }
+
+function getActiveInputCount(client: (typeof remoteClients.value)[number]) {
+  return client.inputState.keyboardKeys.length
+    + client.inputState.mouseButtons.length
+    + Object.keys(client.inputState.gamepadButtons).length
+    + Object.keys(client.inputState.gamepadAxes).length
+}
 </script>
 
 <template>
@@ -203,6 +216,32 @@ function handleMouseMove(event: MouseEvent) {
       class="object-cover"
       :src="convertFileSrc(path)"
     >
+
+    <div
+      v-if="lanStore.settings.enabled"
+      class="pointer-events-none absolute right-2 top-2 z-10 max-w-72 flex flex-col gap-2"
+    >
+      <div class="bg-black/60 px-3 py-2 text-white backdrop-blur text-xs rounded-lg">
+        {{ $t('pages.main.hints.lanSummary', { count: lanStore.remoteClientCount }) }}
+      </div>
+
+      <div
+        v-for="client in remoteClients"
+        :key="client.clientId"
+        class="bg-black/60 px-3 py-2 text-white backdrop-blur text-xs rounded-lg"
+      >
+        <div class="font-medium">
+          {{ client.nickname }}
+        </div>
+
+        <div class="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-white/80">
+          <span>{{ $t('pages.main.hints.remoteKeyboard', { count: client.inputState.keyboardKeys.length }) }}</span>
+          <span>{{ $t('pages.main.hints.remoteMouse', { count: client.inputState.mouseButtons.length }) }}</span>
+          <span>{{ $t('pages.main.hints.remoteGamepad', { count: Object.keys(client.inputState.gamepadButtons).length + Object.keys(client.inputState.gamepadAxes).length }) }}</span>
+          <span>{{ $t('pages.main.hints.remoteInputs', { count: getActiveInputCount(client) }) }}</span>
+        </div>
+      </div>
+    </div>
 
     <div
       v-show="resizing || !modelStore.modelReady"

@@ -3,7 +3,12 @@
     "main": {
       "hints": {
         "redrawing": "Redimensionando...",
-        "switching": "Alternando..."
+        "switching": "Alternando...",
+        "lanSummary": "Sincronização LAN ativa, {count} clientes remotos encontrados",
+        "remoteKeyboard": "Teclado {count}",
+        "remoteMouse": "Mouse {count}",
+        "remoteGamepad": "Controle {count}",
+        "remoteInputs": "Entradas ativas {count}"
       }
     },
     "preference": {
@@ -50,6 +55,11 @@
           "launchOnStartup": "Iniciar na inicialização",
           "showTaskbarIcon": "Mostrar ícone na barra de tarefas",
           "showTrayIcon": "Mostrar ícone na bandeja",
+          "lanSettings": "Sincronização LAN",
+          "lanEnabled": "Ativar sincronização LAN",
+          "lanNickname": "Apelido LAN",
+          "lanPort": "Porta LAN",
+          "lanStatus": "Status da LAN",
           "appearanceSettings": "Configurações de aparência",
           "themeMode": "Tema",
           "language": "Idiomas",
@@ -67,6 +77,9 @@
         "hints": {
           "showTaskbarIcon": "Uma vez ativado, você pode capturar a janela via OBS Studio.",
           "showTrayIcon": "Quando ativado, o ícone do aplicativo é exibido na bandeja do sistema.",
+          "lanEnabled": "Quando ativado, o aplicativo transmite o estado de entrada local e escuta sincronizações de entrada de outros clientes na LAN.",
+          "lanNickname": "Nome de exibição usado para identificar este cliente. Por padrão usa o nome atual do dispositivo.",
+          "lanPort": "Porta UDP compartilhada pelo broadcast e pela escuta em LAN. Todos os clientes devem usar a mesma porta.",
           "inputMonitoringPermission": "Ative a permissão de monitoramento de entrada para receber eventos de teclado e mouse do sistema para responder às suas ações.",
           "inputMonitoringPermissionGuide": "A permissão de Monitoramento de Entrada é necessária para que o aplicativo receba eventos de teclado e mouse do sistema.\n\nPassos:\n1. Abra as Configurações do Sistema → Privacidade e Segurança → Monitoramento de Entrada.\n2. Se o BongoCat já estiver na lista, selecione-o e clique no botão \"-\" para removê-lo.\n3. Clique no botão \"+\" para localizar e adicionar o BongoCat.\n4. Reinicie o aplicativo para que a permissão entre em vigor.",
           "administratorPermission": "Executar o aplicativo como administrador ajuda a capturar algumas teclas e eventos de entrada em nível de sistema com mais confiabilidade.",
@@ -76,7 +89,13 @@
           "authorized": "Autorizado",
           "adminEnabled": "Ativado",
           "authorize": "Ir para Ativar",
-          "viewGuide": "Ver instruções"
+          "viewGuide": "Ver instruções",
+          "lan": {
+            "disabled": "Desativado",
+            "listening": "Escutando",
+            "error": "Erro"
+          },
+          "lanClients": "{count} clientes encontrados"
         },
         "buttons": {
           "openNow": "Abrir Agora",

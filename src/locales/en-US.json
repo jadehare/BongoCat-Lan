@@ -3,7 +3,12 @@
     "main": {
       "hints": {
         "redrawing": "Redrawing...",
-        "switching": "Switching..."
+        "switching": "Switching...",
+        "lanSummary": "LAN sync active, discovered {count} remote clients",
+        "remoteKeyboard": "Keyboard {count}",
+        "remoteMouse": "Mouse {count}",
+        "remoteGamepad": "Gamepad {count}",
+        "remoteInputs": "Active inputs {count}"
       }
     },
     "preference": {
@@ -50,6 +55,11 @@
           "launchOnStartup": "Launch on Startup",
           "showTaskbarIcon": "Show Taskbar Icon",
           "showTrayIcon": "Show Tray Icon",
+          "lanSettings": "LAN Sync",
+          "lanEnabled": "Enable LAN Sync",
+          "lanNickname": "LAN Nickname",
+          "lanPort": "LAN Port",
+          "lanStatus": "LAN Status",
           "appearanceSettings": "Appearance Settings",
           "themeMode": "Theme Mode",
           "language": "Language",
@@ -67,6 +77,9 @@
         "hints": {
           "showTaskbarIcon": "When enabled, the window can be captured via OBS Studio.",
           "showTrayIcon": "When enabled, the app icon is displayed in the system tray.",
+          "lanEnabled": "When enabled, the app broadcasts local input state and listens for remote LAN input sync.",
+          "lanNickname": "The display name used to identify this client. Defaults to the current device name.",
+          "lanPort": "UDP port shared by LAN broadcast and listening. All clients should use the same port.",
           "inputMonitoringPermission": "Enable input monitoring to receive keyboard and mouse events from the system.",
           "inputMonitoringPermissionGuide": "Input Monitoring permission is required for the app to receive keyboard and mouse events from the system.\n\nSteps:\n1. Open System Settings → Privacy & Security → Input Monitoring.\n2. If BongoCat already appears in the list, select it and click the \"-\" button to remove it.\n3. Click the \"+\" button to find and add BongoCat.\n4. Restart the app for the permission to take effect.",
           "administratorPermission": "Running the app as administrator helps capture some system-level keys and input events more reliably.",
@@ -76,7 +89,13 @@
           "authorized": "Authorized",
           "adminEnabled": "Enabled",
           "authorize": "Go to Enable",
-          "viewGuide": "View Instructions"
+          "viewGuide": "View Instructions",
+          "lan": {
+            "disabled": "Disabled",
+            "listening": "Listening",
+            "error": "Error"
+          },
+          "lanClients": "{count} clients discovered"
         },
         "buttons": {
           "openNow": "Open Now",

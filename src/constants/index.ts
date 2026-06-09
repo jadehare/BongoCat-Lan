@@ -10,6 +10,7 @@ export const LISTEN_KEY = {
   GAMEPAD_CHANGED: 'gamepad-changed',
   START_MOTION: 'start-motion',
   SET_EXPRESSION: 'set-expression',
+  LAN_STATE_CHANGED: 'lan-state-changed',
 }
 
 export const INVOKE_KEY = {
@@ -17,6 +18,9 @@ export const INVOKE_KEY = {
   START_DEVICE_LISTENING: 'start_device_listening',
   START_GAMEPAD_LISTING: 'start_gamepad_listing',
   STOP_GAMEPAD_LISTING: 'stop_gamepad_listing',
+  GET_LAN_SYNC_STATE: 'get_lan_sync_state',
+  START_LAN_SYNC: 'start_lan_sync',
+  STOP_LAN_SYNC: 'stop_lan_sync',
 }
 
 export const LANGUAGE = {

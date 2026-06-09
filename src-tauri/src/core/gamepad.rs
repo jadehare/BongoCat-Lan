@@ -1,3 +1,4 @@
+use super::lan;
 use gilrs::{EventType, Gilrs};
 use serde::Serialize;
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -44,7 +45,13 @@ pub async fn start_gamepad_listing<R: Runtime>(app_handle: AppHandle<R>) -> Resu
                 _ => continue,
             };
 
-            let _ = app_handle.emit("gamepad-changed", gamepad_event);
+            let _ = app_handle.emit("gamepad-changed", gamepad_event.clone());
+            lan::forward_local_gamepad_event(
+                &app_handle,
+                &gamepad_event.name,
+                gamepad_event.value,
+                matches!(gamepad_event.kind, GamepadEventKind::AxisChanged),
+            );
         }
     }
 

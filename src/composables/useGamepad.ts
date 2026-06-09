@@ -4,6 +4,7 @@ import { invoke } from '@tauri-apps/api/core'
 import { computed, reactive, watch } from 'vue'
 
 import { INVOKE_KEY, LISTEN_KEY } from '@/constants'
+import { useLanStore } from '@/stores/lan'
 import { useModelStore } from '@/stores/model'
 import live2d from '@/utils/live2d'
 
@@ -34,6 +35,7 @@ const INITIAL_STICK_STATE: StickState = { x: 0, y: 0, moved: false, pressed: fal
 
 export function useGamepad() {
   const modelStore = useModelStore()
+  const lanStore = useLanStore()
   const { handlePress, handleRelease, handleAxisChange } = useModel()
   const sticks = reactive<Sticks>({
     left: { ...INITIAL_STICK_STATE },
@@ -45,8 +47,8 @@ export function useGamepad() {
     right: sticks.right.moved || sticks.right.pressed,
   }))
 
-  watch(() => modelStore.currentModel?.mode, (mode) => {
-    if (mode === 'gamepad') {
+  watch(() => [modelStore.currentModel?.mode, lanStore.settings.enabled], ([mode, enabled]) => {
+    if (mode === 'gamepad' || enabled) {
       return invoke(INVOKE_KEY.START_GAMEPAD_LISTING)
     }
 

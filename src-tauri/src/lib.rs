@@ -4,6 +4,7 @@ mod utils;
 use core::{
     device::start_device_listening,
     gamepad::{start_gamepad_listing, stop_gamepad_listing},
+    lan::{LanSyncState, get_lan_sync_state, start_lan_sync, stop_lan_sync},
     prevent_default, setup,
 };
 use tauri::{Manager, WindowEvent, generate_handler};
@@ -27,11 +28,15 @@ pub fn run() {
 
             Ok(())
         })
+        .manage(LanSyncState::default())
         .invoke_handler(generate_handler![
             copy_dir,
             start_device_listening,
             start_gamepad_listing,
-            stop_gamepad_listing
+            stop_gamepad_listing,
+            get_lan_sync_state,
+            start_lan_sync,
+            stop_lan_sync
         ])
         .plugin(tauri_plugin_admin_status::init())
         .plugin(tauri_plugin_custom_window::init())

@@ -3,7 +3,12 @@
     "main": {
       "hints": {
         "redrawing": "重繪中…",
-        "switching": "切換中…"
+        "switching": "切換中…",
+        "lanSummary": "局域網連線中，已發現 {count} 個遠端客戶端",
+        "remoteKeyboard": "鍵盤 {count}",
+        "remoteMouse": "滑鼠 {count}",
+        "remoteGamepad": "手把 {count}",
+        "remoteInputs": "活動輸入 {count}"
       }
     },
     "preference": {
@@ -50,6 +55,11 @@
           "launchOnStartup": "開機自動啟動",
           "showTaskbarIcon": "顯示工作列圖示",
           "showTrayIcon": "顯示托盤圖示",
+          "lanSettings": "區域網路連線",
+          "lanEnabled": "啟用區域網路連線",
+          "lanNickname": "連線暱稱",
+          "lanPort": "連線埠",
+          "lanStatus": "連線狀態",
           "appearanceSettings": "外觀設定",
           "themeMode": "主題模式",
           "language": "語言",
@@ -67,6 +77,9 @@
         "hints": {
           "showTaskbarIcon": "啟用後，即可透過 OBS Studio 擷取視窗。",
           "showTrayIcon": "啟用後，在系統托盤中顯示應用程式圖示。",
+          "lanEnabled": "啟用後會廣播本機輸入狀態，並接收局域網內其他客戶端的輸入同步。",
+          "lanNickname": "用於區分目前客戶端的顯示名稱，預設會使用目前裝置名稱。",
+          "lanPort": "區域網路廣播與監聽共用的 UDP 連接埠，所有客戶端需要保持一致。",
           "inputMonitoringPermission": "開啟輸入監控權限，以便接收系統的鍵盤和滑鼠游標事件來回應您的操作。",
           "inputMonitoringPermissionGuide": "開啟輸入監控權限後，應用程式才能接收系統的鍵盤和滑鼠事件，進而回應你的操作。\n\n操作方式：\n1. 開啟「系統設定」→「隱私權與安全性」→「輸入監控」。\n2. 若清單中已存在 BongoCat，請先選取它，點擊「-」按鈕將其刪除。\n3. 點擊「+」按鈕，找到並新增 BongoCat 應用程式。\n4. 重新啟動應用程式，以確保權限正式生效。",
           "administratorPermission": "以系統管理員身分執行應用程式，可以更穩定地擷取部分系統層級按鍵與輸入事件。",
@@ -76,7 +89,13 @@
           "authorized": "已授權",
           "adminEnabled": "已啟用",
           "authorize": "去授權",
-          "viewGuide": "查看操作說明"
+          "viewGuide": "查看操作說明",
+          "lan": {
+            "disabled": "已關閉",
+            "listening": "監聽中",
+            "error": "發生錯誤"
+          },
+          "lanClients": "已發現 {count} 個客戶端"
         },
         "buttons": {
           "openNow": "前往開啟",

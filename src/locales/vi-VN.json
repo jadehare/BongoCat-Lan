@@ -3,7 +3,12 @@
     "main": {
       "hints": {
         "redrawing": "Đang đổi kích thước...",
-        "switching": "Đang chuyển đổi..."
+        "switching": "Đang chuyển đổi...",
+        "lanSummary": "Đồng bộ LAN đang bật, đã phát hiện {count} client từ xa",
+        "remoteKeyboard": "Bàn phím {count}",
+        "remoteMouse": "Chuột {count}",
+        "remoteGamepad": "Tay cầm {count}",
+        "remoteInputs": "Đầu vào đang hoạt động {count}"
       }
     },
     "preference": {
@@ -50,6 +55,11 @@
           "launchOnStartup": "Khởi động cùng hệ thống",
           "showTaskbarIcon": "Hiện biểu tượng trên thanh tác vụ (icon taskbar)",
           "showTrayIcon": "Hiện biểu tượng trên khay hệ thống (tray)",
+          "lanSettings": "Đồng bộ LAN",
+          "lanEnabled": "Bật đồng bộ LAN",
+          "lanNickname": "Biệt danh LAN",
+          "lanPort": "Cổng LAN",
+          "lanStatus": "Trạng thái LAN",
           "appearanceSettings": "Cài đặt giao diện",
           "themeMode": "Giao diện",
           "language": "Ngôn ngữ",
@@ -67,6 +77,9 @@
         "hints": {
           "showTaskbarIcon": "Bật để có thể quay cửa sổ qua OBS.",
           "showTrayIcon": "Bật để hiện biểu tượng ứng dụng trên khay hệ thống.",
+          "lanEnabled": "Khi bật, ứng dụng sẽ phát trạng thái đầu vào cục bộ và lắng nghe đồng bộ đầu vào từ các client khác trong mạng LAN.",
+          "lanNickname": "Tên hiển thị để nhận diện client này. Mặc định sẽ dùng tên thiết bị hiện tại.",
+          "lanPort": "Cổng UDP dùng chung cho broadcast và lắng nghe trong LAN. Tất cả client nên dùng cùng một cổng.",
           "inputMonitoringPermission": "Bật quyền giám sát để nhận sự kiện bàn phím và chuột từ hệ thống nhằm phản hồi thao tác của bạn.",
           "inputMonitoringPermissionGuide": "Quyền Giám sát đầu vào là cần thiết để ứng dụng có thể nhận các sự kiện bàn phím và chuột từ hệ thống.\n\nCác bước thực hiện:\n1. Mở Cài đặt hệ thống → Quyền riêng tư & Bảo mật → Giám sát đầu vào.\n2. Nếu BongoCat đã có trong danh sách, hãy chọn nó và nhấn nút \"-\" để xóa.\n3. Nhấn nút \"+\" để tìm và thêm BongoCat.\n4. Khởi động lại ứng dụng để quyền chính thức có hiệu lực.",
           "administratorPermission": "Chạy ứng dụng với quyền quản trị viên giúp bắt một số phím và sự kiện nhập liệu cấp hệ thống ổn định hơn.",
@@ -76,7 +89,13 @@
           "authorized": "Đã cấp quyền",
           "adminEnabled": "Đã bật",
           "authorize": "Đi đến Bật",
-          "viewGuide": "Xem hướng dẫn"
+          "viewGuide": "Xem hướng dẫn",
+          "lan": {
+            "disabled": "Đã tắt",
+            "listening": "Đang lắng nghe",
+            "error": "Lỗi"
+          },
+          "lanClients": "Đã phát hiện {count} client"
         },
         "buttons": {
           "openNow": "Mở ngay",
